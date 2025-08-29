@@ -21,7 +21,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
   print(f"{bot.user.name} is ready and deployed!")
 
-@bot.hybrid_command(aliases=['kj', 'jyukyu'])
+@bot.hybrid_command(aliases=['kj'])
 async def jk(ctx):
   embed = discord.Embed(title='Kyujin or Jiwoo?', description='Starting...', color=0x330066)
   msg = await ctx.channel.send(embed=embed)
@@ -108,17 +108,32 @@ async def play(ctx):
       max_round = 15
     await country_game.play_game(bot, ctx, embed, msg, max_round, game_mode)
 
+@bot.hybrid_command(aliases=['kyujin', 'jiwoo'])
+async def jyukyu(ctx):
+  embed = discord.Embed(title='This is Kyujin!', description='Become familiar with what Kyujin looks like.', color=0xffc0cb)
+  embed.set_image(url='https://kpopping.com/documents/f2/3/250/Kyujin-facePicture(25).webp?v=99dc0')
+  await ctx.channel.send(embed=embed)
+
+  embed = discord.Embed(title='This is Jiwoo!', description='Become familiar with what Jiwoo looks like.', color=0xff0000)
+  embed.set_image(url='https://kpopping.com/documents/af/4/250/Jiwoo-facePicture(54).webp?v=96dd3')
+  await ctx.channel.send(embed=embed)
+
 @bot.command()
 async def h(ctx):
   desc = """
     **General Commands:**
     !play - Opens the game menu for Guess The Country
-    !help, !h - Opens help menu
-    !jk, !kj, !jyukyu - Play a single round of Kyujin or Jiwoo?
+    !jk, !kj - Play a single round of Kyujin or Jiwoo?
     \n
-    **Quick Play Commands:**
+    !help - Opens default help menu
+    !h - Opens this custom help menu
+    \n
+    **Guess The Country Quick Play Commands:**
     !qp, !qpn !qn - Play a single round of Guess The Country (Novel)
     !qpg, !qg - Play a single round of Guess The Country (Gacha)
+    \n
+    **Kyujin or Jiwoo? Helper Commands:**
+    !jyukyu, !kyujin, !jiwoo - Shows an example of what Kyujin and Jiwoo look like
   """
   embed = discord.Embed(title='Help Menu', description=desc, color=0x330066)
   await ctx.channel.send(embed=embed)
