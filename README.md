@@ -3,7 +3,7 @@ Made with [discord.py](https://discordpy.readthedocs.io/en/stable/), and used [g
 
 This discord bot provides a fully functional version of my [Guess the Country (Novel)](https://alteredstar.github.io/games/guess_country_novel.html) game where you guess whether a novel was written by a Japanese, Chinese, or Korean author based on its title.
 
-## Featues
+## Features
 ### Three Modes
 Using `!play` opens the game menu where you can select 1 of 3 modes to begin a game with 1, 5, or 10 rounds.
 
