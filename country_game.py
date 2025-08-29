@@ -10,7 +10,7 @@ def set_game_mode(game_mode):
   global curr_sheet
   if game_mode == 'Novel':
     curr_sheet = sh.get_worksheet(0)
-  elif game_mode == 'Gacha Game':
+  elif game_mode == 'Gacha':
     curr_sheet = sh.get_worksheet(2)
   else:
     curr_sheet = sh.get_worksheet(0)

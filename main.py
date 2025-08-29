@@ -21,23 +21,23 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
   print(f"{bot.user.name} is ready and deployed!")
 
-@bot.hybrid_command()
+@bot.hybrid_command(aliases=['kj', 'jyukyu'])
 async def jk(ctx):
   embed = discord.Embed(title='Kyujin or Jiwoo?', description='Starting...', color=0x330066)
   msg = await ctx.channel.send(embed=embed)
   await jyukyu_game.play_game(bot, ctx, embed, msg)
 
-@bot.hybrid_command()
-async def kj(ctx):
-  embed = discord.Embed(title='Kyujin or Jiwoo?', description='Starting...', color=0x330066)
-  msg = await ctx.channel.send(embed=embed)
-  await jyukyu_game.play_game(bot, ctx, embed, msg)
-
-@bot.hybrid_command()
+@bot.hybrid_command(aliases=['qpn', 'qn'])
 async def qp(ctx):
   embed = discord.Embed(title='Guess The Country (Novel) Quick Play', description='Starting...', color=0x330066)
   msg = await ctx.channel.send(embed=embed)
   await country_game.play_game(bot, ctx, embed, msg, 1, 'Novel')
+
+@bot.hybrid_command(aliases=['qg'])
+async def qpg(ctx):
+  embed = discord.Embed(title='Guess The Country (Gacha) Quick Play', description='Starting...', color=0x330066)
+  msg = await ctx.channel.send(embed=embed)
+  await country_game.play_game(bot, ctx, embed, msg, 1, 'Gacha')
 
 @bot.hybrid_command()
 async def play(ctx):
@@ -77,7 +77,7 @@ async def play(ctx):
     if str(reaction.emoji) == novel:
       game_mode = 'Novel'
     elif str(reaction.emoji) == gacha_game:
-      game_mode = 'Gacha Game'
+      game_mode = 'Gacha'
 
   await msg.clear_reactions()
 
