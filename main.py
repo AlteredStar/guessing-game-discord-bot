@@ -4,7 +4,7 @@ import logging
 from dotenv import load_dotenv
 import os
 import asyncio
-import game
+import country_game
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -21,35 +21,79 @@ async def on_ready():
   print(f"{bot.user.name} is ready and deployed!")
 
 @bot.hybrid_command()
+async def qp(ctx):
+  embed = discord.Embed(title='Guess The Country (Novel) Quick Play', description='Starting...', color=0x330066)
+  msg = await ctx.channel.send(embed=embed)
+  await country_game.set_game_mode('novel')
+  await country_game.play_game(bot, ctx, embed, msg, 1)
+
+@bot.hybrid_command()
 async def play(ctx):
   embed_color = 0x330066
+  novel = '📚'
+  gacha_game = '🎮'
+  valid_games = ['📚', '🎮']
   one = '1️⃣'
   two = '2️⃣'
   three = '3️⃣'
-  valid_reactions = ['1️⃣', '2️⃣', '3️⃣']
+  valid_rounds = ['1️⃣', '2️⃣', '3️⃣']
 
+  game_mode = 'default'
   max_round = 0
   
-  embed = discord.Embed(title='Menu', description=f'{one} - Guess the Novel\'s Country 1 Round\n{two} - Guess the Novel\'s Country 5 Rounds\n{three} - Guess the Novel\'s Country 10 Rounds\n', color=embed_color)
-  msg = await ctx.channel.send(embed=embed)
-  await msg.add_reaction(one)
-  await msg.add_reaction(two)
-  await msg.add_reaction(three)
+  async def display_emotes(msg, emojis):
+    for emote in emojis:
+      await msg.add_reaction(emote)
 
-  def check(reaction, user):
-    return user == ctx.author and str(reaction.emoji) in valid_reactions
+  menu_desc = f"""
+    {novel} - Guess The Country: Novel Edition\n
+    {gacha_game} - Guess The Country: Gacha Game Edition
+  """
+  embed = discord.Embed(title='Menu', description=menu_desc, color=embed_color)
+  msg = await ctx.channel.send(embed=embed)
+  await display_emotes(msg, valid_games)
+
+  #check for game mode selection
+  def check_game(reaction, user):
+    return user == ctx.author and str(reaction.emoji) in valid_games
   
   try:
-    reaction, user = await bot.wait_for('reaction_add', timeout=60.0, check=check)
+    reaction, user = await bot.wait_for('reaction_add', timeout=60.0, check=check_game)
+  except asyncio.TimeoutError:
+    print("Timeout Error")
+  else:
+    if str(reaction.emoji) == novel:
+      game_mode = 'Novel'
+    elif str(reaction.emoji) == gacha_game:
+      game_mode = 'Gacha Game'
+
+  await msg.clear_reactions()
+
+  embed.title += f" - Guess The Country ({game_mode})"
+  round_desc = f"""
+    {one} - 5 Rounds\n
+    {two} - 10 Rounds\n
+    {three} - 15 Rounds\n
+  """
+  embed.description = round_desc
+  await msg.edit(embed=embed)
+  await display_emotes(msg, valid_rounds)
+
+  #check for how many rounds
+  def check_round(reaction, user):
+    return user == ctx.author and str(reaction.emoji) in valid_rounds
+  
+  try:
+    reaction, user = await bot.wait_for('reaction_add', timeout=60.0, check=check_round)
   except asyncio.TimeoutError:
     print("Timeout Error")
   else:
     if str(reaction.emoji) == one:
-      max_round = 1
-    elif str(reaction.emoji) == two:
       max_round = 5
-    elif str(reaction.emoji) == three:
+    elif str(reaction.emoji) == two:
       max_round = 10
-    await game.play_game(bot, ctx, embed, msg, max_round)
+    elif str(reaction.emoji) == three:
+      max_round = 15
+    await country_game.play_game(bot, ctx, embed, msg, max_round, game_mode)
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)

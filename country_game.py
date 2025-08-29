@@ -4,12 +4,20 @@ import time
 import asyncio
 
 gc = gspread.service_account(filename='./guess-the-novel-434985dafe63.json')
+sh = gc.open_by_key('1ZnoPHkTQu_7aI2ohQMyjpmin20pANRJYVLa9GxuPxrA')
 
-sh = gc.open_by_key('1ZnoPHkTQu_7aI2ohQMyjpmin20pANRJYVLa9GxuPxrA').sheet1
+def set_game_mode(game_mode):
+  global curr_sheet
+  if game_mode == 'Novel':
+    curr_sheet = sh.get_worksheet(0)
+  elif game_mode == 'Gacha Game':
+    curr_sheet = sh.get_worksheet(2)
+  else:
+    curr_sheet = sh.get_worksheet(0)
 
-def generate_novel():
-  col = random.randint(1, 3)  
-  return (sh.col_values(col)[random.randint(1, len(sh.col_values(col)) - 1)], col) #(title, row number)
+def generate():
+  col = random.randint(1, 3) #country
+  return (curr_sheet.col_values(col)[random.randint(1, len(curr_sheet.col_values(col)) - 1)], col) #(title, row number)
 
 class COUNTRY:
   JP = 1
@@ -27,7 +35,9 @@ def get_emoji_flag(actual_country):
 def guess(actual_country, guess_country):  
   return actual_country == guess_country
 
-async def play_game(bot, ctx, embed, msg, max_round):
+async def play_game(bot, ctx, embed, msg, max_round, game_mode):
+  set_game_mode(game_mode)
+  
   score = 0
   game_status = None
   game_tracker = []
@@ -39,9 +49,9 @@ async def play_game(bot, ctx, embed, msg, max_round):
 
   for current_round in range(max_round):
     await msg.clear_reactions()
-    current_novel = generate_novel()
-  
-    embed.title = f'Guess the Novel\'s Country Round {current_round + 1}/{max_round}'
+    current_novel = generate()
+    
+    embed.title = f'Guess The Country ({game_mode}): Round {current_round + 1}/{max_round}'
     embed.description = current_novel[0]
     embed.color = 0x330066
     await msg.edit(embed=embed)
