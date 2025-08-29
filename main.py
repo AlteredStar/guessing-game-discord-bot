@@ -108,4 +108,19 @@ async def play(ctx):
       max_round = 15
     await country_game.play_game(bot, ctx, embed, msg, max_round, game_mode)
 
+@bot.command()
+async def h(ctx):
+  desc = """
+    **General Commands:**
+    !play - Opens the game menu for Guess The Country
+    !help, !h - Opens help menu
+    !jk, !kj, !jyukyu - Play a single round of Kyujin or Jiwoo?
+    \n
+    **Quick Play Commands:**
+    !qp, !qpn !qn - Play a single round of Guess The Country (Novel)
+    !qpg, !qg - Play a single round of Guess The Country (Gacha)
+  """
+  embed = discord.Embed(title='Help Menu', description=desc, color=0x330066)
+  await ctx.channel.send(embed=embed)
+
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
