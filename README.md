@@ -15,4 +15,6 @@ Upon finishing the game, you can see your final score, which titles you correctl
 
 ### Kyujin or Jiwoo?
 #### Play
-Using `!jk` or `!kj` or `!jyukyu` allows you to play a single round of Kyujin or Jiwoo?. Select your guess by clicking on one of the reaction emojis that show up!
+Using `!jk` or `!kj` allows you to play a single round of Kyujin or Jiwoo?. Select your guess by clicking on one of the reaction emojis that show up!
+#### Getting Started
+Using `!jyukyu` or `!kyujin` or `!jiwoo` shows you an image of Kyujin and Jiwoo to help you get familiar with what they look like if you have never seen them before.
