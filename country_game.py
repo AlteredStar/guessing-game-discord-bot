@@ -17,7 +17,7 @@ def set_game_mode(game_mode):
 
 def generate():
   col = random.randint(1, 3) #country
-  return (curr_sheet.col_values(col)[random.randint(1, len(curr_sheet.col_values(col)) - 1)], col) #(title, row number)
+  return (curr_sheet.col_values(col)[random.randint(1, len(curr_sheet.col_values(col)) - 1)], col) #(title, country)
 
 class COUNTRY:
   JP = 1
@@ -80,14 +80,13 @@ async def play_game(bot, ctx, embed, msg, max_round, game_mode):
     if game_status:
       score += 1
       game_tracker.append(f":white_check_mark: {current_novel[0]} {get_emoji_flag(current_novel[1])}")
-      embed.description += "\n\n**CORRECT**"
+      embed.description += f" {get_emoji_flag(current_novel[1])}\n\n**CORRECT**"
       embed.color = 0x008000
-      await msg.edit(embed=embed)
     else:
       game_tracker.append(f":x: {current_novel[0]} {get_emoji_flag(current_novel[1])}")
-      embed.description += "\n\n**WRONG**"
+      embed.description += f" {get_emoji_flag(current_novel[1])}\n\n**WRONG**"
       embed.color = 0xff0000
-      await msg.edit(embed=embed)
+    await msg.edit(embed=embed)
     time.sleep(2)
 
     if (current_round + 1) == max_round:

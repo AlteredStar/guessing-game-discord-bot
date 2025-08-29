@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import asyncio
 import country_game
+import jyukyu_game
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -21,11 +22,22 @@ async def on_ready():
   print(f"{bot.user.name} is ready and deployed!")
 
 @bot.hybrid_command()
+async def jk(ctx):
+  embed = discord.Embed(title='Kyujin or Jiwoo?', description='Starting...', color=0x330066)
+  msg = await ctx.channel.send(embed=embed)
+  await jyukyu_game.play_game(bot, ctx, embed, msg)
+
+@bot.hybrid_command()
+async def kj(ctx):
+  embed = discord.Embed(title='Kyujin or Jiwoo?', description='Starting...', color=0x330066)
+  msg = await ctx.channel.send(embed=embed)
+  await jyukyu_game.play_game(bot, ctx, embed, msg)
+
+@bot.hybrid_command()
 async def qp(ctx):
   embed = discord.Embed(title='Guess The Country (Novel) Quick Play', description='Starting...', color=0x330066)
   msg = await ctx.channel.send(embed=embed)
-  await country_game.set_game_mode('novel')
-  await country_game.play_game(bot, ctx, embed, msg, 1)
+  await country_game.play_game(bot, ctx, embed, msg, 1, 'Novel')
 
 @bot.hybrid_command()
 async def play(ctx):
