@@ -1,11 +1,20 @@
 ## About The Project
 Made with [discord.py](https://discordpy.readthedocs.io/en/stable/), and used [gspread](https://docs.gspread.org/en/v6.1.4/) to access a spreadsheet via Google Sheets API.
 
-This discord bot provides a fully functional version of my [Guess the Country (Novel)](https://alteredstar.github.io/games/guess_country_novel.html) game where you guess whether a novel was written by a Japanese, Chinese, or Korean author based on its title.
+This discord bot provides a fully functional version of my [Guess the Country (Novel)](https://alteredstar.github.io/games/guess_country_novel.html) game where you guess whether a novel was written by a Japanese, Chinese, or Korean author based on its title. Also includes my [Guess the Country (Gacha)](https://alteredstar.github.io/games/guess_country_novel.html) version of the game as well as a completely new game: Kyujin or Jiwoo? where you are given an image and guess whetether the person shown is NMIXX's Kyujin or Jiwoo.
 
 ## Features
-### Three Modes
-Using `!play` opens the game menu where you can select 1 of 3 modes to begin a game with 1, 5, or 10 rounds.
+### Guess The Country
+#### Play
+Using `!play` opens the game menu where you can select between the Novel and Gacha version. Then select how many rounds you want to play: 5, 10, or 15. Select your options and guesses by clicking on the appropriate reaction emojis that show up!
+#### Comprehensive Results
+Upon finishing the game, you can see your final score, which titles you correctly and incorrectly guessed, and their correct country of origin.
+#### Quick Play
+* Using `!qp` (QuickPlay) or `!qpn` (QuickPlayNovel) or `!qn` (QuickNovel) allows you to play a single round of the Novel version.
+* Using `!qpg` (QuickPlayGacha) or `!qg` (QuickGacha) allows you to play a single round of the Gacha version.
 
-### Comprehensive Results
-Upon finishing the game, you can see which titles you correctly and incorrectly guessed, as well as their correct origin country.
+### Kyujin or Jiwoo?
+#### Play
+Using `!jk` or `!kj` allows you to play a single round of Kyujin or Jiwoo?. Select your guess by clicking on one of the reaction emojis that show up!
+#### Getting Started
+Using `!jyukyu` or `!kyujin` or `!jiwoo` shows you an image of Kyujin and Jiwoo to help you get familiar with what they look like if you have never seen them before.
