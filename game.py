@@ -8,8 +8,8 @@ gc = gspread.service_account(filename='./guess-the-novel-434985dafe63.json')
 sh = gc.open_by_key('1ZnoPHkTQu_7aI2ohQMyjpmin20pANRJYVLa9GxuPxrA').sheet1
 
 def generate_novel():
-  row = random.randint(1, 3)  
-  return (sh.col_values(row)[random.randint(2, len(sh.col_values(row)))], row) #(title, row number)
+  col = random.randint(1, 3)  
+  return (sh.col_values(col)[random.randint(1, len(sh.col_values(col)) - 1)], col) #(title, row number)
 
 class COUNTRY:
   JP = 1
